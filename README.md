@@ -1,0 +1,2 @@
+# FinManager
+Finance Management System
