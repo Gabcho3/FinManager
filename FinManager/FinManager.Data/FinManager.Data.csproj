@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
+    <ProjectReference Include="..\FinManager.Common\FinManager.Common.csproj" />
   </ItemGroup>
 
 </Project>
