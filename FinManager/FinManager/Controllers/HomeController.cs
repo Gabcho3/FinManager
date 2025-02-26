@@ -1,6 +1,7 @@
 using System.Diagnostics;
-using FinManager.Models;
 using Microsoft.AspNetCore.Mvc;
+
+using FinManager.Models;
 
 namespace FinManager.Controllers
 {

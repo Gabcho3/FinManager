@@ -1,6 +1,8 @@
-using FinManager.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
+using FinManager.Data;
+using FinManager.Data.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +12,13 @@ builder.Services.AddDbContext<FinManagerDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser<Guid>>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<FinManagerDbContext>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options => options.SignIn.RequireConfirmedAccount = false) //*Add Require Confirmation
+    .AddEntityFrameworkStores<FinManagerDbContext>()
+    .AddDefaultTokenProviders()
+    .AddDefaultUI();
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
