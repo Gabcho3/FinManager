@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - FinManager</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FinManager.styles.css" asp-append-version="true" />
 </head>
@@ -25,6 +26,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark">About</a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -37,11 +44,42 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="bg-dark text-light py-4 mt-5">
         <div class="container">
-            &copy; 2025 - FinManager - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="d-flex justify-content-center" style="gap:30em;">
+                <div>
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><strong>Phone:</strong> +1 (800) 123-4567</li>
+                        <li><strong>Email:</strong> contact@finmanager.com</li>
+                        <li><strong>Address:</strong> 123 Financial St, New York, NY 10001</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5>Follow Us</h5>
+                    <ul class="list-group">
+                        <li class="list-inline-item">
+                            <a href="#" class="text-light"><i class="bi bi-facebook"></i> Facebook</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="text-light"><i class="bi bi-twitter"></i> Twitter</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="text-light"><i class="bi bi-linkedin"></i> LinkedIn</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="text-center">
+                <p>&copy; 2025 FinManager. All Rights Reserved.</p>
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
