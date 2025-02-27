@@ -3,13 +3,13 @@
 }
 
 <div class="text-center">
-    <section>
+    <section id="welcome">
         <h1>Welcome to FinManager!</h1>
         <p class="fs-3">The place where managing your finances becomes effortless.</p>
         <button type="button" class="btn btn-outline-success fs-4">Get started</button>
     </section>
 
-    <section class="container py-5">
+    <section id="features" class="container py-5">
         <h2 class="text-center mb-4">Key Features</h2>
 
         <div class="row text-center">
@@ -47,7 +47,86 @@
         </div>
     </section>
 
-    
+    <section id="user-reviews" class="container my-5" style="max-width:400px;">
+        <h2 class="text-center">What Our Users Say</h2>
+
+        <div id="reviewsCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="text-center">
+                        <p class="lead">"Lorem ipsum odor amet, consectetuer adipiscing elit. Est taciti parturient a maximus facilisis quam pharetra. Dictumst posuere imperdiet per nulla massa non turpis pellentesque facilisi."</p>
+                        <div class="d-flex justify-content-center">
+                            <span class="badge bg-primary">Sarah J.</span>
+                            <span class="ms-2">★★★★☆</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="text-center">
+                        <p class="lead">"Lorem ipsum odor amet, consectetuer adipiscing elit. Est taciti parturient a maximus facilisis quam pharetra. Dictumst posuere imperdiet per nulla massa non turpis pellentesque facilisi."</p>
+                        <div class="d-flex justify-content-center">
+                            <span class="badge bg-primary">John D.</span>
+                            <span class="ms-2">★★★★★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="text-center">
+                        <p class="lead">"Lorem ipsum odor amet, consectetuer adipiscing elit. Est taciti parturient a maximus facilisis quam pharetra. Dictumst posuere imperdiet per nulla massa non turpis pellentesque facilisi."</p>
+                        <div class="d-flex justify-content-center">
+                            <span class="badge bg-primary">Emily R.</span>
+                            <span class="ms-2">★★★★☆</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+
+    <section id="faq" class="container my-5" style="max-width: 800px;">
+        <h2 class="text-center">Frequently Asked Questions</h2>
+
+        <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        What is FinManager?
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        FinManager is a user-friendly application designed to help individuals and businesses manage their finances. It allows you to track your income, expenses, and create budgets for a clearer financial overview.
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Is my financial data secure?
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Yes, we take security seriously. All sensitive data is encrypted, and we follow best practices to ensure your financial information is safe and secure.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 
 <style>
@@ -57,5 +136,9 @@
 
     .feature-icon {
         font-size: 2rem;
+    }
+
+    .user-reviews{
+        height: 100%;
     }
 </style>
