@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinManager.Data\FinManager.Data.csproj" />
+	  <ProjectReference Include="..\FinManager.Data\FinManager.Common.csproj" />
+  </ItemGroup>
+
 </Project>
