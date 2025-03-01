@@ -32,10 +32,10 @@ namespace FinManager.Data.Entities
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; } = null!;
 
-        [Required]
-        public Guid CatagoryId { get; set; }
+        //[Required]
+        //public Guid CatagoryId { get; set; }
 
-        [ForeignKey("CategoryId")]
-        public Category Category { get; set; } = null!;
+        //[ForeignKey("CategoryId")]
+        //public Category Category { get; set; } = null!;
     }
 }
