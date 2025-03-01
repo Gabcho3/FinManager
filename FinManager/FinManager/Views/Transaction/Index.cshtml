@@ -1,6 +1,10 @@
-﻿@{
+﻿@using FinManager.Core.Models.Transaction
+
+@{
     ViewData["Title"] = "Transactions";
 }
+
+@model IEnumerable<TransactionViewModel>;
 
 <div class="container mt-4">
     <h1>@ViewData["Title"]</h1>
@@ -14,22 +18,30 @@
             <tr>
                 <th>Date</th>
                 <th>Amount</th>
-                <th>Category</th>
+                <th>Description</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-           @*  @foreach (var transaction in Model.Transactions)
+            @foreach (var transaction in Model)
             {
                 <tr>
-                    <td>@transaction.Date</td>
-                    <td>@transaction.Amount</td>
-                    <td>@transaction.Category</td>
+                    <td>@transaction.Date.ToString("dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture)</td>
+
+                    @if(transaction.TransactionType.ToString() == "Income")
+                    {
+                        <td style="color:lightgreen">+@transaction.Amount$</td>
+                    }
+                    else
+                    {
+                        <td style="color:red">-@transaction.Amount$</td>
+                    }
+                    <td>@transaction.Description</td>
                     <td>
                         <!-- Actions like Edit/Delete can go here -->
                     </td>
                 </tr>
-            } *@
+            }
         </tbody>
     </table>
 </div>
@@ -44,20 +56,20 @@
             <div class="modal-body">
                 <form asp-controller="Transaction" asp-action="Add" method="post">
                     <div class="mb-3">
-                        <label for="Date" class="form-label">Date</label>
-                        <input type="date" class="form-control" id="Date" name="Date" required />
+                        <label for="Date" class="form-label">Date & Time</label>
+                        <input type="datetime-local" class="form-control" id="Date" name="Date" required />
                     </div>
 
                     <div class="mb-3">
                         <label for="Amount" class="form-label">Amount</label>
-                        <input type="number" class="form-control" id="Amount" name="Amount" required />
+                        <input type="number" class="form-control" id="Amount" name="Amount" min="0" required />
                     </div>
 
                     <div class="mb-3">
-                        <label for="Category" class="form-label">Category</label>
-                        <select class="form-select" id="Category" name="Category" required>
-                            <option value="0">Expense</option>
-                            <option value="1">Income</option>
+                        <label for="TransactionType" class="form-label">Type</label>
+                        <select class="form-select" id="TransactionType" name="TransactionType" required>
+                            <option value="Expense">Expense</option>
+                            <option value="Income">Income</option>
                         </select>
                     </div>
 
@@ -74,3 +86,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let now = new Date();
+        let year = now.getFullYear();
+        let month = String(now.getMonth() + 1).padStart(2, '0'); // Ensure two digits
+        let day = String(now.getDate()).padStart(2, '0');
+        let hours = String(now.getHours()).padStart(2, '0');
+        let minutes = String(now.getMinutes()).padStart(2, '0');
+
+        let maxDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+        document.getElementById("Date").setAttribute("max", maxDateTime);
+        document.getElementById("Date").setAttribute("value", maxDateTime);
+    });
+</script>

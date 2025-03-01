@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-using FinManager.Core.Models.Transactions;
-
+using FinManager.Core.Models.Transaction;
 using FinManager.Core.Contracts;
 using Microsoft.AspNetCore.Identity;
 using FinManager.Data.Entities;
@@ -13,28 +12,34 @@ namespace FinManager.Controllers
         private readonly ITransactionService service;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public TransactionController(ITransactionService service, UserManager<ApplicationUser> userManager)
+        private Guid userId => GetUserId();
+
+        public TransactionController(ITransactionService _service, UserManager<ApplicationUser> _userManager)
         {
-            this.service = service;
-            this.userManager = userManager;
+            this.service = _service;
+            this.userManager = _userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var allTransactions = await service.GetAllUserTransactionsAsync(userId);
+
+            return View(allTransactions);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(TransactionFormModel transaction)
         {
-            transaction.UserId = Guid.Parse(userManager.GetUserId(User)!);
+            transaction.UserId = userId;
             if (ModelState.IsValid)
             {
                 await service.AddTransactionAsync(transaction);
             }
 
-            return Index(); // If validation fails, stay on the same page
+             return RedirectToAction("Index");
         }
+
+        private Guid GetUserId() => Guid.Parse(userManager.GetUserId(User)!);
     }
 }
