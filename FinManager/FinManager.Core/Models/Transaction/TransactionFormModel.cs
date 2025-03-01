@@ -25,7 +25,7 @@ namespace FinManager.Core.Models.Transactions
         [Required]
         public Guid UserId { get; set; }
 
-        [Required]
-        public Guid CatagoryId { get; set; }
+        //[Required]
+        //public Guid CatagoryId { get; set; }
     }
 }

@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FinManager.Data\FinManager.Data.csproj" />
+    <ProjectReference Include="..\FinManager.Core\FinManager.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,7 +10,7 @@ namespace FinManager.Core.Helpers
         public FinManagerProfile()
         {
             //Transaction
-            CreateMap<Transaction, TransactionFormModel>();
+            CreateMap<TransactionFormModel, Transaction>();
         }
     }
 }

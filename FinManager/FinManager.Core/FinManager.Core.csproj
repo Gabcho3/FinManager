@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinManager.Data\FinManager.Data.csproj" />
-	  <ProjectReference Include="..\FinManager.Data\FinManager.Common.csproj" />
+	  <ProjectReference Include="..\FinManager.Common\FinManager.Common.csproj" />
   </ItemGroup>
 
 </Project>
