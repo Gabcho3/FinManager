@@ -3,6 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 using FinManager.Data;
 using FinManager.Data.Entities;
+using FinManager.Core.Contracts;
+using FinManager.Core.Services;
+using AutoMapper;
+using FinManager.Core.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +20,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options => opt
     .AddEntityFrameworkStores<FinManagerDbContext>()
     .AddDefaultTokenProviders()
     .AddDefaultUI();
+
+builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddAutoMapper(typeof(FinManagerProfile));
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
