@@ -1,4 +1,4 @@
-﻿using FinManager.Core.Models.Transactions;
+﻿using FinManager.Core.Models.Transaction;
 
 namespace FinManager.Core.Contracts
 {
@@ -9,5 +9,7 @@ namespace FinManager.Core.Contracts
         Task EditTransactionAsync(Guid transactionId, TransactionFormModel transactionFormModel);
 
         Task DeleteTransactionAsync(Guid transactionId);
+
+        Task<IEnumerable<TransactionViewModel>> GetAllUserTransactionsAsync(Guid userId);
     }
 }

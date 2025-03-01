@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 
 using FinManager.Core.Contracts;
-using FinManager.Core.Models.Transactions;
+using FinManager.Core.Models.Transaction;
 using FinManager.Data;
 using FinManager.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinManager.Core.Services
 {
@@ -36,6 +37,21 @@ namespace FinManager.Core.Services
             throw new NotImplementedException();
         }
 
-        
+        public async Task<IEnumerable<TransactionViewModel>> GetAllUserTransactionsAsync(Guid userId)
+        {
+            var transactions = await context.Transactions
+                .AsNoTracking()
+                .Where(t => t.UserId == userId)
+                .ToArrayAsync();
+
+            var allUserTransactions = new List<TransactionViewModel>();
+
+            foreach(var transaction in transactions)
+            {
+                allUserTransactions.Add(mapper.Map<TransactionViewModel>(transaction));
+            }
+
+            return allUserTransactions;
+        }
     }
 }

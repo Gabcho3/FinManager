@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-using FinManager.Core.Models.Transactions;
+using FinManager.Core.Models.Transaction;
 using FinManager.Data.Entities;
 
 namespace FinManager.Core.Helpers
@@ -11,6 +11,7 @@ namespace FinManager.Core.Helpers
         {
             //Transaction
             CreateMap<TransactionFormModel, Transaction>();
+            CreateMap<Transaction, TransactionViewModel>();
         }
     }
 }

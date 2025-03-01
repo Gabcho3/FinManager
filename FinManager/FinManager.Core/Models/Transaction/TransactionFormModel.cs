@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 using FinManager.Common.DataConstants;
 
-namespace FinManager.Core.Models.Transactions
+namespace FinManager.Core.Models.Transaction
 {
     public class TransactionFormModel
     {
