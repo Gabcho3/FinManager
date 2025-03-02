@@ -11,5 +11,7 @@ namespace FinManager.Core.Contracts
         Task DeleteTransactionAsync(Guid transactionId);
 
         Task<IEnumerable<TransactionViewModel>> GetAllUserTransactionsAsync(Guid userId);
+
+        TransactionViewModel GetTransactionById(Guid transactionId);
     }
 }

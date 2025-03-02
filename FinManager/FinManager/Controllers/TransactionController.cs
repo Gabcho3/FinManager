@@ -75,6 +75,13 @@ namespace FinManager.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await service.DeleteTransactionAsync(id);
+
+            return RedirectToAction("Index");
+        }
+
         private Guid GetUserId() => Guid.Parse(userManager.GetUserId(User)!);
     }
 }

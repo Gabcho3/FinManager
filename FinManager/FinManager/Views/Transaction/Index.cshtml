@@ -39,7 +39,7 @@
                     <td>@transaction.Description</td>
                     <td>
                         <a asp-controller ="Transaction" asp-action="Edit" asp-route-id="@transaction.Id" class="btn btn-warning">Edit</a>
-                        <button asp-action="Delete" class="btn btn-danger">Delete</button>
+                        <a asp-controller="Transaction" asp-action="Delete" asp-route-id="@transaction.Id" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             }
