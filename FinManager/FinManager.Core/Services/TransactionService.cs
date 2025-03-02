@@ -63,5 +63,12 @@ namespace FinManager.Core.Services
 
             return allUserTransactions;
         }
+
+        public TransactionViewModel GetTransactionById(Guid transactionId)
+        {
+            var transaction = context.Transactions.First(t => t.Id == transactionId);
+
+            return mapper.Map<TransactionViewModel>(transaction);
+        }
     }
 }
