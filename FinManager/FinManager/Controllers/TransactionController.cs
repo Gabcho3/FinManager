@@ -22,9 +22,14 @@ namespace FinManager.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var allTransactions = await service.GetAllUserTransactionsAsync(userId);
+            var pageViewModel = new TransactionPageViewModel()
+            {
+                AllUserTransactions = await service.GetAllUserTransactionsAsync(userId),
+                TransactionViewModel = new TransactionViewModel(),
+                TransactionFormModel = new TransactionFormModel()
+            };
 
-            return View(allTransactions);
+            return View(pageViewModel);
         }
 
         [HttpPost]
@@ -38,6 +43,36 @@ namespace FinManager.Controllers
             }
 
              return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var transaction = service.GetTransactionById(id);
+            var pageViewModel = new TransactionPageViewModel()
+            {
+                AllUserTransactions = await service.GetAllUserTransactionsAsync(userId),
+                TransactionViewModel = transaction,
+                TransactionFormModel = new TransactionFormModel()
+            };
+
+
+            return View("Index", pageViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(TransactionFormModel transaction)
+        {
+            if (ModelState.IsValid)
+            {
+                await service.EditTransactionAsync(transaction.Id, transaction);
+            }
+            else
+            {
+                return RedirectToAction("Edit", transaction.Id);
+            }
+
+            return RedirectToAction("Index");
         }
 
         private Guid GetUserId() => Guid.Parse(userManager.GetUserId(User)!);

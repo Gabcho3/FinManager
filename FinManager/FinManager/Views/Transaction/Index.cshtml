@@ -4,12 +4,12 @@
     ViewData["Title"] = "Transactions";
 }
 
-@model IEnumerable<TransactionViewModel>;
+@model TransactionPageViewModel
 
 <div class="container mt-4">
     <h1>@ViewData["Title"]</h1>
 
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#transactionModal">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTransactionModal">
         Add Transaction
     </button>
 
@@ -23,7 +23,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var transaction in Model)
+            @foreach (var transaction in Model.AllUserTransactions)
             {
                 <tr>
                     <td>@transaction.Date.ToString("dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture)</td>
@@ -38,7 +38,8 @@
                     }
                     <td>@transaction.Description</td>
                     <td>
-                        <!-- Actions like Edit/Delete can go here -->
+                        <a asp-controller ="Transaction" asp-action="Edit" asp-route-id="@transaction.Id" class="btn btn-warning">Edit</a>
+                        <button asp-action="Delete" class="btn btn-danger">Delete</button>
                     </td>
                 </tr>
             }
@@ -46,7 +47,8 @@
     </table>
 </div>
 
-<div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+<!-- Add Transaction Modal -->
+<div class="modal fade" id="addTransactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -57,12 +59,12 @@
                 <form asp-controller="Transaction" asp-action="Add" method="post">
                     <div class="mb-3">
                         <label for="Date" class="form-label">Date & Time</label>
-                        <input type="datetime-local" class="form-control" id="Date" name="Date" required />
+                        <input type="datetime-local" class="form-control" id="date1" name="Date" required />
                     </div>
 
                     <div class="mb-3">
                         <label for="Amount" class="form-label">Amount</label>
-                        <input type="number" class="form-control" id="Amount" name="Amount" min="0" required />
+                        <input type="number" class="form-control" id="Amount" name="Amount" min="1" required />
                     </div>
 
                     <div class="mb-3">
@@ -79,13 +81,76 @@
                     </div>
 
                     <div class="mb-3">
-                        <button type="submit" class="btn btn-primary">Save Transaction</button>
+                        <button asp-action="Add" type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Edit Transaction Modal -->
+<div class="modal fade" id="editTransactionModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="transactionModalLabel">Edit Transaction</h5>
+                <button id="close-modal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modalContent">
+                    <form id="editTransactionForm" asp-controller="Transaction" asp-action="Edit" method="post">
+
+                        <input type="hidden" asp-for="TransactionFormModel.Id" />
+
+                        <div class="mb-3">
+                            <label for="Date" class="form-label">Date & Time</label>
+                            <input asp-for="TransactionFormModel.Date" value="@Model.TransactionViewModel.Date.ToString("yyyy-MM-dd tHH:mm")" type="datetime-local" class="form-control" id="date2" name="Date" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Amount" class="form-label">Amount</label>
+                            <input asp-for="TransactionFormModel.Amount" value="@Model.TransactionViewModel.Amount" type="number" class="form-control" id="Amount" name="Amount" min="1" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="TransactionType" class="form-label">Type</label>
+                            <select asp-for="TransactionFormModel.TransactionType"  class="form-select" id="TransactionType" name="TransactionType" required>
+
+                                @if (Model.TransactionViewModel.TransactionType.ToString() == "Income")
+                                {
+                                    <option value="Expense">Expense</option>
+                                    <option selected value="Income">Income</option>
+                                }
+                                else
+                                {
+                                    <option value="Expense">Expense</option>
+                                    <option value="Income">Income</option>
+                                }
+
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Description" class="form-label">Description</label>
+                            <input asp-for="TransactionFormModel.Description" value="@Model.TransactionViewModel.Description" type="text" class="form-control" id="Description" name="Description" />
+                        </div>
+
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-warning">Edit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hiiden button for triggering Edit Modal -->
+<button id="openModalButton" style="display:none;" data-bs-toggle="modal" data-bs-target="#editTransactionModal"></button>
+
+<!-- Hidden input to pass the model data -->
+<input type="hidden" id="modelData" value="@Model.TransactionViewModel?.Amount" />
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -98,7 +163,25 @@
 
         let maxDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
 
-        document.getElementById("Date").setAttribute("max", maxDateTime);
-        document.getElementById("Date").setAttribute("value", maxDateTime);
+        document.getElementById("date1").setAttribute("max", maxDateTime);
+        document.getElementById("date1").setAttribute("value", maxDateTime);
+
+        document.getElementById("date2").setAttribute("max", maxDateTime);
+        document.getElementById("date2").setAttribute("value", maxDateTime);
+
+        //Triggering Edit Modal
+        var modelData = document.getElementById('modelData').value;
+
+        if (modelData != "0") {
+            // Find the modal trigger button
+            var openModalButton = document.getElementById('openModalButton');
+            
+            // Trigger the button click event to open the modal
+            openModalButton.click();
+        }
+
+        document.getElementById("close-modal").addEventListener("click", () => {
+           window.location.href = "/Transaction";
+        })
     });
 </script>
