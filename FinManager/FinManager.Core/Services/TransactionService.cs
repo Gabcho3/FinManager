@@ -27,14 +27,24 @@ namespace FinManager.Core.Services
             await context.SaveChangesAsync();
         }
         
-        public Task EditTransactionAsync(Guid transactionId, TransactionFormModel transactionFormModel)
+        public async Task EditTransactionAsync(Guid transactionId, TransactionFormModel transactionFormModel)
         {
-            throw new NotImplementedException();
+            var transactionToEdit = context.Transactions.First(t => t.Id == transactionId);
+
+            transactionToEdit.TransactionType = transactionFormModel.TransactionType;
+            transactionToEdit.Amount = transactionFormModel.Amount;
+            transactionToEdit.Date = transactionFormModel.Date;
+            transactionToEdit.Description = transactionFormModel.Description;
+
+            await context.SaveChangesAsync();
         }
 
-        public Task DeleteTransactionAsync(Guid transactionId)
+        public async Task DeleteTransactionAsync(Guid transactionId)
         {
-            throw new NotImplementedException();
+            var transactionToDelete = context.Transactions.First(t => t.Id == transactionId);
+            context.Remove(transactionToDelete);
+
+            await context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<TransactionViewModel>> GetAllUserTransactionsAsync(Guid userId)
