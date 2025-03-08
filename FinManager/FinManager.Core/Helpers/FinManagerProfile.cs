@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 
+using FinManager.Core.Models.Budget;
 using FinManager.Core.Models.Transaction;
 using FinManager.Data.Entities;
 
@@ -12,6 +13,9 @@ namespace FinManager.Core.Helpers
             //Transaction
             CreateMap<TransactionFormModel, Transaction>();
             CreateMap<Transaction, TransactionViewModel>();
+
+            //Budget
+            CreateMap<Budget, BudgetViewModel>();
         }
     }
 }
