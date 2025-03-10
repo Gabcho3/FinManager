@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinManager.Data.Migrations
 {
     [DbContext(typeof(FinManagerDbContext))]
-    [Migration("20250301165307_InitialMigration")]
+    [Migration("20250310191520_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -101,8 +101,15 @@ namespace FinManager.Data.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
