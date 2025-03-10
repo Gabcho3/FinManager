@@ -15,6 +15,7 @@ namespace FinManager.Core.Helpers
             CreateMap<Transaction, TransactionViewModel>();
 
             //Budget
+            CreateMap<BudgetFormModel, Budget>();
             CreateMap<Budget, BudgetViewModel>();
         }
     }

@@ -22,6 +22,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options => opt
     .AddDefaultUI();
 
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<IBudgetService, BudgetService>();
 builder.Services.AddAutoMapper(typeof(FinManagerProfile));
 
 builder.Services.AddControllersWithViews();
