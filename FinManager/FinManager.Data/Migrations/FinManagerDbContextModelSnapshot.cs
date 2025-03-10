@@ -121,6 +121,21 @@ namespace FinManager.Data.Migrations
                     b.ToTable("Budgets");
                 });
 
+            modelBuilder.Entity("FinManager.Data.Entities.BudgetTransaction", b =>
+                {
+                    b.Property<Guid>("BudgetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TransactionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("BudgetId", "TransactionId");
+
+                    b.HasIndex("TransactionId");
+
+                    b.ToTable("BudgetTransactions");
+                });
+
             modelBuilder.Entity("FinManager.Data.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -347,6 +362,25 @@ namespace FinManager.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("FinManager.Data.Entities.BudgetTransaction", b =>
+                {
+                    b.HasOne("FinManager.Data.Entities.Budget", "Budget")
+                        .WithMany("BudgetsTransactions")
+                        .HasForeignKey("BudgetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinManager.Data.Entities.Transaction", "Transaction")
+                        .WithMany("BudgetsTransactions")
+                        .HasForeignKey("TransactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Budget");
+
+                    b.Navigation("Transaction");
+                });
+
             modelBuilder.Entity("FinManager.Data.Entities.SavingGoal", b =>
                 {
                     b.HasOne("FinManager.Data.Entities.ApplicationUser", "User")
@@ -427,6 +461,16 @@ namespace FinManager.Data.Migrations
                     b.Navigation("SavingGoals");
 
                     b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("FinManager.Data.Entities.Budget", b =>
+                {
+                    b.Navigation("BudgetsTransactions");
+                });
+
+            modelBuilder.Entity("FinManager.Data.Entities.Transaction", b =>
+                {
+                    b.Navigation("BudgetsTransactions");
                 });
 #pragma warning restore 612, 618
         }

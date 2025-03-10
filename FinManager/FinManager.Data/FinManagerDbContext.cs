@@ -21,6 +21,8 @@ namespace FinManager.Data
 
         public DbSet<Transaction> Transactions { get; set;} = null!;
 
+        public DbSet<BudgetTransaction> BudgetTransactions { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ApplicationUser>()
@@ -37,6 +39,9 @@ namespace FinManager.Data
                 .HasMany(u => u.Budgets)
                 .WithOne(b => b.User)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<BudgetTransaction>()
+                .HasKey(bt => new { bt.BudgetId, bt.TransactionId });
 
             base.OnModelCreating(builder);
         }

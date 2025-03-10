@@ -237,6 +237,30 @@ namespace FinManager.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BudgetTransactions",
+                columns: table => new
+                {
+                    BudgetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TransactionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BudgetTransactions", x => new { x.BudgetId, x.TransactionId });
+                    table.ForeignKey(
+                        name: "FK_BudgetTransactions_Budgets_BudgetId",
+                        column: x => x.BudgetId,
+                        principalTable: "Budgets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BudgetTransactions_Transactions_TransactionId",
+                        column: x => x.TransactionId,
+                        principalTable: "Transactions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -282,6 +306,11 @@ namespace FinManager.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BudgetTransactions_TransactionId",
+                table: "BudgetTransactions",
+                column: "TransactionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SavingGoals_UserId",
                 table: "SavingGoals",
                 column: "UserId");
@@ -311,7 +340,7 @@ namespace FinManager.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Budgets");
+                name: "BudgetTransactions");
 
             migrationBuilder.DropTable(
                 name: "Categories");
@@ -320,10 +349,13 @@ namespace FinManager.Data.Migrations
                 name: "SavingGoals");
 
             migrationBuilder.DropTable(
-                name: "Transactions");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Budgets");
+
+            migrationBuilder.DropTable(
+                name: "Transactions");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

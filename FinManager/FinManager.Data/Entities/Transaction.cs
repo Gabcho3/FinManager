@@ -32,6 +32,8 @@ namespace FinManager.Data.Entities
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; } = null!;
 
+        public ICollection<BudgetTransaction> BudgetsTransactions => new List<BudgetTransaction>();
+
         //[Required]
         //public Guid CatagoryId { get; set; }
 

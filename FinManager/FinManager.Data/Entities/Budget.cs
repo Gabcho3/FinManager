@@ -35,6 +35,8 @@ namespace FinManager.Data.Entities
         [Required]
         public ApplicationUser User { get; set; } = null!;
 
+        public ICollection<BudgetTransaction> BudgetsTransactions => new List<BudgetTransaction>();
+
         //[Required]
         //public Guid CategoryId { get; set; }
 
