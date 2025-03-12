@@ -23,6 +23,8 @@ namespace FinManager.Core.Services
         {
             var transactionToAdd = mapper.Map<Transaction>(transactionFormModel);
 
+            await AddTransactionToBudgetAsync(transactionToAdd);
+
             await context.AddAsync(transactionToAdd);
             await context.SaveChangesAsync();
         }
@@ -35,6 +37,8 @@ namespace FinManager.Core.Services
             transactionToEdit.Amount = transactionFormModel.Amount;
             transactionToEdit.Date = transactionFormModel.Date;
             transactionToEdit.Description = transactionFormModel.Description;
+
+            await AddTransactionToBudgetAsync(transactionToEdit);
 
             await context.SaveChangesAsync();
         }
@@ -69,6 +73,26 @@ namespace FinManager.Core.Services
             var transaction = context.Transactions.First(t => t.Id == transactionId);
 
             return mapper.Map<TransactionViewModel>(transaction);
+        }
+
+        private async Task AddTransactionToBudgetAsync(Transaction transaction)
+        {
+            var userBudgets = await context.Budgets.Where(b => b.UserId == transaction.Id).ToArrayAsync();
+            foreach (var budget in userBudgets)
+            {
+                if (transaction.Date >= budget.StartDate && transaction.Date <= budget.EndDate)
+                {
+                    var budgetTransaction = new BudgetTransaction()
+                    {
+                        BudgetId = budget.Id,
+                        TransactionId = transaction.Id
+                    };
+
+                    budget.BudgetsTransactions.Add(budgetTransaction);
+                }
+            }
+
+            await context.SaveChangesAsync();
         }
     }
 }
