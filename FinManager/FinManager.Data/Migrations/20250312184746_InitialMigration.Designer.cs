@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinManager.Data.Migrations
 {
     [DbContext(typeof(FinManagerDbContext))]
-    [Migration("20250310195103_InitialMigration")]
+    [Migration("20250312184746_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -370,13 +370,13 @@ namespace FinManager.Data.Migrations
                     b.HasOne("FinManager.Data.Entities.Budget", "Budget")
                         .WithMany("BudgetsTransactions")
                         .HasForeignKey("BudgetId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("FinManager.Data.Entities.Transaction", "Transaction")
                         .WithMany("BudgetsTransactions")
                         .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Budget");

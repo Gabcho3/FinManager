@@ -367,13 +367,13 @@ namespace FinManager.Data.Migrations
                     b.HasOne("FinManager.Data.Entities.Budget", "Budget")
                         .WithMany("BudgetsTransactions")
                         .HasForeignKey("BudgetId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("FinManager.Data.Entities.Transaction", "Transaction")
                         .WithMany("BudgetsTransactions")
                         .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Budget");

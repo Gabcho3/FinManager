@@ -43,6 +43,16 @@ namespace FinManager.Data
             builder.Entity<BudgetTransaction>()
                 .HasKey(bt => new { bt.BudgetId, bt.TransactionId });
 
+            builder.Entity<BudgetTransaction>()
+                .HasOne(bt => bt.Budget)
+                .WithMany(b => b.BudgetsTransactions)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<BudgetTransaction>()
+                .HasOne(bt => bt.Transaction)
+                .WithMany(t => t.BudgetsTransactions)
+                .OnDelete(DeleteBehavior.NoAction);
+
             base.OnModelCreating(builder);
         }
     }
